@@ -1,4 +1,4 @@
-const Storage = (function() {
+const StorageCtrl = (function() {
 
 })();
 
@@ -12,4 +12,4 @@ const UICtrl = (function() {
 
 const App = (function() {
 
-})();
+})(StorageCtrl, DataCtrl, UICtrl);
