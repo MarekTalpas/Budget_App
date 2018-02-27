@@ -1,17 +1,128 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Budget App</title>
-  </head>
-  <body>
-    <h1>Budget App</h1>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="app.js"></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <title>Budget App</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-dark bg-dark mb-5">
+    <a class="navbar-brand" href="#">
+      <img src="assets/img/gl-logo.png" width="50" height="50" alt="">
+    </a>
+    <button type="button" id="clear-all-btn" class="btn btn-outline-info">Clear All</button>
+  </nav>
+
+  <div class="container">
+
+    <h1 class="mb-3">Budget Calculator</h1>
+
+    <div class="card shadow mb-5">
+      <div class="card-header">
+        Total Incomes for
+        <span class="current-month">January</span>
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <label for="price-input-incomes">Price</label>
+            <input type="number" class="form-control" id="price-input-incomes" placeholder="1000">
+          </div>
+          <button type="submit" data-toggle="tooltip" data-placement="top" title="Add sum of your total monthly incomes to your overall balance" id="incomes-add-btn" class="btn btn-primary btn-lg mt-3 add-mode">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card shadow mb-5">
+      <div class="card-header">
+        Espenses for
+        <span class="current-month">January</span>
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <label for="price-input">Price</label>
+            <input type="number" class="form-control" id="price-input" placeholder="10">
+          </div>
+          <div class="form-group">
+            <label for="amount-input">Amount</label>
+            <input type="number" class="form-control" id="amount-input" placeholder="3">
+          </div>
+          <div class="form-group">
+            <label for="description-input">Description</label>
+            <input type="text" class="form-control" id="description-input" placeholder="pizza">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category</button>
+              <div class="dropdown-menu">
+                <!-- <a class="dropdown-item" href="#">Action</a> -->
+                <!-- <a class="dropdown-item" href="#">Action</a> -->
+                <!-- <a class="dropdown-item" href="#">Action</a> -->
+              </div>
+            </div>
+            <input placeholder="food" type="text" id="category-input" class="form-control" aria-label="Text input with dropdown button">
+          </div>
+          <button data-toggle="tooltip" data-placement="top" title="Add one item to your monthly expenses" type="submit" id="expenses-add-btn" class="btn btn-primary btn-lg mt-3 add-mode">Add</button>
+          <button data-toggle="tooltip" data-placement="top" title="Update one item of your monthly expenses" type="submit" id="expenses-edit-btn" class="btn btn-success btn-lg mt-3 update-mode">Update</button>
+          <button data-toggle="tooltip" data-placement="top" title="go back from update mode to add mode" type="submit" id="expenses-back-btn" class="btn btn-secondary btn-lg mt-3 float-right update-mode">Back</button>
+        </form>
+      </div>
+    </div>
+
+    <h2 class="text-secondary font-weight-light">
+      <em>Balance:
+        <span id="balance-field" class="text-danger">$10</span>
+      </em>
+    </h2>
+
+    <table class="table table-striped">
+      <thead class="table-header">
+        <tr>
+          <th scope="col">Category</th>
+          <th scope="col">Description</th>
+          <th scope="col">Price</th>
+          <th scope="col">Amount</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="collection-row" id="row-0">
+          <td>Food</td>
+          <td>Pizza</td>
+          <td>$10</td>
+          <td>3</td>
+          <td>
+            <a href="#" class="secondary-content">
+              <i data-toggle="tooltip" data-placement="top" title="udpate this item" class="edit-icon fa fa-pencil" style="color:#28a745"></i>
+            </a>
+          </td>
+          <td>
+            <a href="#" class="secondary-content">
+              <i data-toggle="tooltip" data-placement="top" title="remove this item" class="remove-icon fa fa-trash-o" style="color:#dc3545"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+</body>
+
 </html>

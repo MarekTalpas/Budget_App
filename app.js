@@ -13,3 +13,7 @@ const UICtrl = (function() {
 const App = (function() {
 
 })(StorageCtrl, DataCtrl, UICtrl);
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
