@@ -26,14 +26,16 @@
 
     <div class="card shadow mb-5">
       <div class="card-header">
-        Total Incomes for
-        <span class="current-month">January</span>
+        Monthly Total Incomes
       </div>
       <div class="card-body">
         <form>
           <div class="form-group">
             <label for="price-input-incomes">Price</label>
-            <input type="number" class="form-control" id="price-input-incomes" placeholder="1000">
+            <input type="number" class="form-control" id="price-input-incomes">
+            <div class="invalid-feedback">
+              This field must not be empty
+            </div>
           </div>
           <button type="submit" data-toggle="tooltip" data-placement="top" title="Add sum of your total monthly incomes to your overall balance"
             id="incomes-add-btn" class="btn btn-primary btn-lg mt-3 add-mode">Submit</button>
@@ -43,42 +45,53 @@
 
     <div class="card shadow mb-5">
       <div class="card-header">
-        Espenses for
-        <span class="current-month">January</span>
+        Monthly Espenses
       </div>
       <div class="card-body">
         <form>
           <div class="form-group">
-            <label for="price-input">Price</label>
-            <input type="number" class="form-control" id="price-input" placeholder="10">
+            <label for="expenses-price-input">Price</label>
+            <input type="number" class="form-control" id="expenses-price-input">
+            <div class="invalid-feedback">
+              This field must not be empty
+            </div>
           </div>
           <div class="form-group">
-            <label for="count-input">Count</label>
-            <input type="number" class="form-control" id="amount-input" placeholder="3">
+            <label for="expenses-count-input">Count</label>
+            <input type="number" class="form-control" id="expenses-count-input">
+            <div class="invalid-feedback">
+              This field must not be empty
+            </div>
           </div>
           <div class="form-group">
-            <label for="description-input">Description</label>
-            <input type="text" class="form-control" id="description-input" placeholder="pizza">
+            <label for="expenses-description-input">Description</label>
+            <input type="text" class="form-control" id="expenses-description-input">
+            <div class="invalid-feedback">
+              This field must not be empty
+            </div>
           </div>
           <div class="form-group mb-3">
             <div class="form-group">
-              <label for="category-select">Category</label>
-              <select class="form-control" id="category-select">
-                <option selected>Choose...</option>
-                <option class="category-item">Insurance</option>
-                <option class="category-item">Miscellaneous</option>
-                <option class="category-item">Housing</option>
-                <option class="category-item">Utilities</option>
-                <option class="category-item">Food</option>
-                <option class="category-item">Transport</option>
-                <option class="category-item">Clothing</option>
-                <option class="category-item">Medical/Health</option>
-                <option class="category-item">Personal</option>
-                <option class="category-item">Recreation</option>
-                <option class="category-item">Giving</option>
-                <option class="category-item">Debts</option>
-                <option class="category-item">Other</option>
+              <label for="expenses-category-select">Category</label>
+              <select class="form-control" id="expenses-category-select">
+                <option value="" selected>Choose...</option>
+                <option value="Insurance" class="category-item">Insurance</option>
+                <option value="Miscellaneous" class="category-item">Miscellaneous</option>
+                <option value="Housing" class="category-item">Housing</option>
+                <option value="Utilities" class="category-item">Utilities</option>
+                <option value="Food" class="category-item">Food</option>
+                <option value="Transport" class="category-item">Transport</option>
+                <option value="Clothing" class="category-item">Clothing</option>
+                <option value="Medical/Health" class="category-item">Medical Health</option>
+                <option value="Personal" class="category-item">Personal</option>
+                <option value="Recreation/Sport" class="category-item">Recreation and Sport</option>
+                <option value="Giving" class="category-item">Giving</option>
+                <option value="Debts" class="category-item">Debts</option>
+                <option value="Other" class="category-item">Other</option>
               </select>
+              <div class="invalid-feedback">
+                Choose some option
+              </div>
             </div>
           </div>
           <button data-toggle="tooltip" data-placement="top" title="Add one item to your monthly expenses" type="submit" id="expenses-add-btn"
@@ -97,36 +110,22 @@
       </em>
     </h2>
 
-    <table class="table table-striped">
-      <thead class="table-header">
-        <tr>
-          <th scope="col">Category</th>
-          <th scope="col">Description</th>
-          <th scope="col">Price</th>
-          <th scope="col">Count</th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="collection-row" id="row-0">
-          <td>Food</td>
-          <td>Pizza</td>
-          <td>$10</td>
-          <td>3</td>
-          <td>
-            <a href="#" class="secondary-content">
-              <i data-toggle="tooltip" data-placement="top" title="udpate this item" class="edit-icon fa fa-pencil" style="color:#28a745"></i>
-            </a>
-          </td>
-          <td>
-            <a href="#" class="secondary-content">
-              <i data-toggle="tooltip" data-placement="top" title="remove this item" class="remove-icon fa fa-trash-o" style="color:#dc3545"></i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead class="table-header">
+          <tr>
+            <th scope="col">Category</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">Count</th>
+            <th scope="col" class="last-cell"></th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          
+        </tbody>
+      </table>
+    </div>
 
   </div>
 

@@ -26,3 +26,11 @@ body {
 .card {
   border: none;
 }
+
+.unvisible {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
