@@ -35,6 +35,7 @@ const DataCtrl = (function () {
         data.items.push(item);
         UICtrl.clearFormInputs();
         UICtrl.renderItemRow(item);
+        UICtrl.renderAddExpenseNotification('add', 'New item was successfuly created');
         console.log(DataCtrl.logItems());
 
         return item;
@@ -55,13 +56,16 @@ const DataCtrl = (function () {
 
 const UICtrl = (function () {
   const UIselectors = {
+    container: '.container',
     incomesPriceInput: '#price-input-incomes',
+    expensesCard: '.expenses-card',
     expensePriceInput: '#expenses-price-input',
     expensesCountInput: '#expenses-count-input',
     expensesDescriptionInput: '#expenses-description-input',
     expensesCategorySelect: '#expenses-category-select',
     expensesAddBtn: '#expenses-add-btn',
     formInputs: '.form-control',
+    balanceContainer: '.balance-container',
     tableBody: '#table-body',
     table: '.table-responsive'
   };
@@ -94,6 +98,30 @@ const UICtrl = (function () {
       } else {
         document.querySelector(UIselectors.table).classList.add('visible');
       }
+    },
+    renderAddExpenseNotification: function(mode, notificationText) {
+      let classByMode = '';
+      const timeOut = 3000;
+
+      if (mode === 'add') {
+        classByMode = 'alert alert-success mt-4';
+      } else {
+        classByMode = 'alert alert-danger mt-4';
+      }
+
+      const container = document.querySelector(UIselectors.container);
+      const balanceContainer = document.querySelector(UIselectors.balanceContainer);
+
+      const notificationContainer = document.createElement('div');
+      const textContent = document.createTextNode(notificationText);
+      notificationContainer.className = classByMode;
+      notificationContainer.appendChild(textContent);
+
+      container.insertBefore(notificationContainer, balanceContainer);
+
+      setTimeout(function() {
+        notificationContainer.remove();
+      }, timeOut);
     },
     renderItemRow: function(inputData) {
       const html = `
