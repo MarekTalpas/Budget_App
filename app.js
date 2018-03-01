@@ -33,19 +33,26 @@ const DataCtrl = (function () {
         const item = new Item(id, price, count, description, category);
 
         data.items.push(item);
+
+        DataCtrl.calculateBalance(parseFloat(item.expense).toFixed(2), parseInt(item.count));
         UICtrl.clearFormInputs();
         UICtrl.renderItemRow(item);
+        UICtrl.renderBalance();
         UICtrl.renderAddExpenseNotification('add', 'New item was successfuly created');
-        console.log(DataCtrl.logItems());
+        console.log(DataCtrl.getItems());
 
         return item;
       }
       
     },
-    logData: function () {
+    calculateBalance: function(amount, count) {
+      console.log(typeof amount);
+      data.balance += parseFloat(amount) * count;
+    },
+    getData: function () {
       return data;
     },
-    logItems: function () {
+    getItems: function () {
       return data.items;
     }
   };
@@ -66,6 +73,7 @@ const UICtrl = (function () {
     expensesAddBtn: '#expenses-add-btn',
     formInputs: '.form-control',
     balanceContainer: '.balance-container',
+    balanceText: '#balance-text' ,
     tableBody: '#table-body',
     table: '.table-responsive'
   };
@@ -93,7 +101,7 @@ const UICtrl = (function () {
       document.querySelector(UIselectors.expensesCategorySelect).value = '';
     },
     hideTable: function() {
-      if (DataCtrl.logItems().length === 0) {
+      if (DataCtrl.getItems().length === 0) {
         document.querySelector(UIselectors.table).classList.add('unvisible');
       } else {
         document.querySelector(UIselectors.table).classList.add('visible');
@@ -143,6 +151,10 @@ const UICtrl = (function () {
 
       document.querySelector(UIselectors.tableBody).insertAdjacentHTML('beforeend', html);
     },
+    renderBalance: function() {
+      const balanceValue = DataCtrl.getData().balance;
+      document.querySelector(UIselectors.balanceText).innerHTML = `$${balanceValue}`;
+    },
     getValueObjFromInputs: function () {
       return {
         expensePriceInputVal: document.querySelector(UIselectors.expensePriceInput).value,
@@ -169,6 +181,7 @@ const App = (function (StorageCtrl, DataCtrl, UICtrl, $) {
 
   const onDOMCOntentLoaded = function () {
     UICtrl.hideTable();
+    UICtrl.renderBalance();
 
     $('[data-toggle="tooltip"]').tooltip();
   };
