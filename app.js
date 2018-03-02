@@ -45,8 +45,27 @@ const DataCtrl = (function () {
       }
       
     },
+    removeExpenseById: function(id) {
+      const ids = data.items.map(function(item) {
+        return parseInt(item.id);
+      });
+
+      let currentIndex;
+      let deletedItemId;
+
+      ids.forEach(function(currentId, index) {
+        if (currentId === id) {
+          currentIndex = index;
+        }
+      });
+
+      deletedItemId = data.items[currentIndex].id;
+      data.items.splice(currentIndex, 1);
+
+      return deletedItemId;
+
+    },
     calculateBalance: function(amount, count) {
-      console.log(typeof amount);
       data.balance += parseFloat(amount) * count;
     },
     getData: function () {
@@ -101,9 +120,12 @@ const UICtrl = (function () {
       document.querySelector(UIselectors.expensesCategorySelect).value = '';
     },
     hideTable: function() {
+      
       if (DataCtrl.getItems().length === 0) {
+        document.querySelector(UIselectors.table).classList.remove('visible');
         document.querySelector(UIselectors.table).classList.add('unvisible');
       } else {
+        document.querySelector(UIselectors.table).classList.remove('unvisible');
         document.querySelector(UIselectors.table).classList.add('visible');
       }
     },
@@ -149,11 +171,20 @@ const UICtrl = (function () {
         </tr>
       `;
 
-      document.querySelector(UIselectors.tableBody).insertAdjacentHTML('beforeend', html);
+      document.querySelector(UIselectors.tableBody).insertAdjacentHTML('afterbegin', html);
     },
     renderBalance: function() {
       const balanceValue = DataCtrl.getData().balance;
       document.querySelector(UIselectors.balanceText).innerHTML = `$${balanceValue}`;
+    },
+    removeExpenseFromUI: function(id) {
+      const rowBeingRemoved = document.querySelector(`#row-${id}`);
+      if (rowBeingRemoved.previousElementSibling === null && rowBeingRemoved.nextElementSibling === null) {
+        rowBeingRemoved.remove();
+        UICtrl.hideTable();
+      } else {
+        rowBeingRemoved.remove();
+      }
     },
     getValueObjFromInputs: function () {
       return {
@@ -177,6 +208,7 @@ const App = (function (StorageCtrl, DataCtrl, UICtrl, $) {
       input.addEventListener('keypress', onInputChange, false);
     });
     document.querySelector(UICtrl.getUISelectors().expensesCategorySelect).addEventListener('change', onInputChange, false);
+    document.querySelector(UICtrl.getUISelectors().tableBody).addEventListener('click', onRemoveExpenseIconCLick, false);
   };
 
   const onDOMCOntentLoaded = function () {
@@ -203,6 +235,16 @@ const App = (function (StorageCtrl, DataCtrl, UICtrl, $) {
 
     ev.preventDefault();
   };
+
+  const onRemoveExpenseIconCLick = function(ev) {
+    if (ev.target.classList.contains('remove-icon')) {
+      const id = ev.target.dataset.id;
+      const deletedItemId = DataCtrl.removeExpenseById(parseInt(id));
+      UICtrl.removeExpenseFromUI(deletedItemId);
+    }
+
+    ev.preventDefault();
+  }
 
   return {
     init: function () {
